@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-slate-950">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>M&R - Preventive Maintenance PRO 
+  </title>
+
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <meta name="theme-color" content="#020617">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="M&R PM">
+  <meta name="application-name" content="M&R PM">
+  <meta name="description" content="Sistem Pemeliharaan Preventif Dapur & Peralatan F&B">
+
+  <!-- PWA Manifest Generated via Data URI -->
+  <link rel="manifest" id="pwaManifestLink">
+
+  <!-- Dynamic SVG Favicon & Apple Touch Icon -->
+  <link id="dynamicFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%234f46e5'/><path d='M360 160h-48v-24c0-22.1-17.9-40-40-40h-32c-22.1 0-40 17.9-40 40v24h-48c-22.1 0-40 17.9-40 40v240c0 22.1 17.9 40 40 40h248c22.1 0 40-17.9 40-40V200c0-22.1-17.9-40-40-40zm-120-24c0-4.4 3.6-8 8-8h32c4.4 0 8 3.6 8 8v24h-48v-24zm120 264H152V200h208v200z' fill='%23ffffff'/><circle cx='256' cy='300' r='36' fill='%2338bdf8'/></svg>">
+  <link id="dynamicAppleTouchIcon" rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%234f46e5'/><path d='M360 160h-48v-24c0-22.1-17.9-40-40-40h-32c-22.1 0-40 17.9-40 40v24h-48c-22.1 0-40 17.9-40 40v240c0 22.1 17.9 40 40 40h248c22.1 0 40-17.9 40-40V200c0-22.1-17.9-40-40-40zm-120-24c0-4.4 3.6-8 8-8h32c4.4 0 8 3.6 8 8v24h-48v-24zm120 264H152V200h208v200z' fill='%23ffffff'/><circle cx='256' cy='300' r='36' fill='%2338bdf8'/></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .glass-modal {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .splash-bar-animate {
+      animation: splashProgress 5s linear forwards;
+    }
+
+    @keyframes splashProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+        padding: 24px;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 flex flex-col min-h-screen overflow-x-hidden">
+
+  <!-- ==================== SPLASH SCREEN (EXACTLY 5 SECONDS) ==================== -->
+  <div id="splashScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white transition-opacity duration-700">
+    <div class="relative flex flex-col items-center max-w-sm text-center px-6">
+      <div class="absolute -top-12 w-56 h-56 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Company Logo / Custom Image -->
+      <div id="splashLogoContainer" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-xl shadow-indigo-500/20 mb-6 ring-1 ring-white/20 overflow-hidden">
+        <i id="splashDefaultIcon" class="fa-solid fa-utensils-wrench text-4xl text-white hidden"></i>
+        <img id="splashCustomLogo" src="" class="w-full h-full object-cover" alt="Company Logo">
+      </div>
+      
+      <h1 id="splashCompName" class="text-2xl font-extrabold tracking-tight text-white mb-2">DIKICHI</h1>
+      <p id="splashCompAddress" class="text-xs text-slate-400 mb-6 leading-relaxed max-w-xs">Jl. Adi Sucipto, Kenaiban, Manahan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57174</p>
+      
+      <!-- 5-Second Progress Bar -->
+      <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden mb-3 border border-slate-700/50">
+        <div id="splashProgressBar" class="bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 h-full rounded-full splash-bar-animate"></div>
+      </div>
+      <p class="text-[11px] text-indigo-400 font-medium">Memuat Dashboard dalam <span id="splashCountdown">5</span> detik...</p>
+    </div>
+
+    <div class="absolute bottom-6 text-slate-600 text-[11px] font-medium tracking-wide">
+      PREVENTIVE MAINTENANCE &bull; V3.0 PRO
+    </div>
+  </div>
+
+  <!-- ==================== APP HEADER (HORIZONTAL TOP NAVIGATION NAVBAR) ==================== -->
+  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between py-3 sm:py-0 sm:h-16 gap-3">
+        
+        <!-- Brand Logo & Company Info -->
+        <div class="flex items-center gap-3 flex-shrink-0 w-full sm:w-auto justify-between sm:justify-start">
+          <div class="flex items-center gap-3">
+            <div id="headerLogoContainer" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 ring-1 ring-white/10 overflow-hidden flex-shrink-0">
+              <i id="headerDefaultIcon" class="fa-solid fa-fire-burner text-base hidden"></i>
+              <img id="headerCustomLogo" src="" class="w-full h-full object-cover" alt="Logo">
+            </div>
+            <div class="overflow-hidden">
+              <h2 id="headerCompName" class="font-bold text-white text-xs sm:text-sm truncate">DIKICHI</h2>
+              <p id="headerCompAddress" class="text-[10px] text-slate-400 truncate hidden md:block">Colomadu, Karanganyar</p>
+            </div>
+          </div>
+
+          <!-- Header PWA Install & Quick Add (Mobile) -->
+          <div class="flex items-center gap-2 sm:hidden">
+            <button id="btnHeaderInstall" onclick="triggerPwaInstall()" class="hidden flex items-center gap-1.5 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold py-1.5 px-3 rounded-xl shadow-lg text-[11px] transition-all">
+              <i class="fa-solid fa-download"></i>
+              <span>Install</span>
+            </button>
+            <button onclick="openModalAddItem()" class="flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold py-1.5 px-3 rounded-xl shadow-lg text-[11px] transition-all">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span>Tambah</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- HORIZONTAL NAVIGATION LINKS -->
+        <nav class="flex items-center space-x-1 sm:space-x-1.5 lg:space-x-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20">
+            <i class="fa-solid fa-chart-pie text-xs"></i>
+            <span>Dashboard</span>
+          </button>
+
+          <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/70 hover:text-slate-200 transition-all relative">
+            <i class="fa-solid fa-calendar-check text-xs"></i>
+            <span>Jadwal PM</span>
+            <span id="badgeDueCount" class="bg-rose-500/20 text-rose-400 ring-1 ring-rose-500/30 text-[10px] px-1.5 py-0.2 rounded-full font-bold hidden">0</span>
+          </button>
+
+          <button onclick="switchTab('items')" id="nav-items" class="nav-btn whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/70 hover:text-slate-200 transition-all">
+            <i class="fa-solid fa-server text-xs"></i>
+            <span>Data Mesin</span>
+          </button>
+
+          <button onclick="switchTab('history')" id="nav-history" class="nav-btn whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/70 hover:text-slate-200 transition-all">
+            <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+            <span>Riwayat</span>
+          </button>
+
+          <button onclick="switchTab('settings')" id="nav-settings" class="nav-btn whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/70 hover:text-slate-200 transition-all">
+            <i class="fa-solid fa-sliders text-xs"></i>
+            <span>Pengaturan</span>
+          </button>
+        </nav>
+
+        <!-- Right Quick Action & PWA Desktop Install Button -->
+        <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+          <button id="btnDesktopInstall" onclick="triggerPwaInstall()" class="hidden flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold py-2 px-3.5 rounded-xl shadow-lg shadow-cyan-500/10 text-xs transition-all border border-cyan-400/20">
+            <i class="fa-solid fa-download"></i>
+            <span>Install App</span>
+          </button>
+          <button onclick="openModalAddItem()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-2 px-3.5 rounded-xl shadow-lg shadow-amber-500/10 text-xs transition-all">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Tambah Item</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main class="flex-1 bg-slate-950 p-4 lg:p-8 max-w-7xl mx-auto w-full mb-16">
+
+    <!-- PWA INSTALL FLOATING BANNER FOR MOBILE -->
+    <div id="pwaBanner" class="hidden mb-6 bg-gradient-to-r from-indigo-900/90 via-indigo-950 to-slate-900 border border-indigo-500/40 p-4 rounded-2xl shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-white">Instal Aplikasi M&R di HP Anda</h4>
+          <p class="text-[11px] text-indigo-200/80 mt-0.5">Dapatkan akses cepat tanpa browser, responsif offline, dan performa lebih cepat.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <button onclick="triggerPwaInstall()" class="flex-1 sm:flex-none px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 text-center">
+          <i class="fa-solid fa-download mr-1"></i> Instal Sekarang
+        </button>
+        <button onclick="dismissPwaBanner()" class="px-2.5 py-2 text-slate-400 hover:text-slate-200 text-xs">
+          Nanti
+        </button>
+      </div>
+    </div>
+
+    <!-- SYSTEM ALERT BANNER -->
+    <div id="dueAlertBanner" class="mb-6 hidden bg-amber-500/10 border border-amber-500/30 p-4 rounded-2xl backdrop-blur-md flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-triangle-exclamation text-base"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-amber-300">Peringatan Jadwal Maintenance</h4>
+          <p id="dueAlertMessage" class="text-xs text-amber-200/80 mt-0.5">Ada beberapa mesin F&B mendekati/melewati batas waktu maintenance.</p>
+        </div>
+      </div>
+      <button onclick="switchTab('schedule')" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-xs transition">
+        Periksa Sekarang
+      </button>
+    </div>
+
+    <!-- TAB 1: DASHBOARD OVERVIEW -->
+    <section id="tab-dashboard" class="tab-content space-y-6">
+      <div>
+        <h1 class="text-2xl font-bold text-white tracking-tight">Dashboard Maintenance Overview</h1>
+        <p class="text-slate-400 text-xs mt-1">Pemantauan kesehatan & jadwal perawatan otomatis mesin dapur/bar F&B.</p>
+      </div>
+
+      <!-- STATS CARDS / KPI METRICS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center">
+            <i class="fa-solid fa-cubes text-xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Mesin</p>
+            <h3 id="statTotalItems" class="text-2xl font-extrabold text-white mt-0.5">0</h3>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center">
+            <i class="fa-solid fa-circle-check text-xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status Normal</p>
+            <h3 id="statSafeItems" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</h3>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center">
+            <i class="fa-solid fa-hourglass-half text-xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Mendekati PM</p>
+            <h3 id="statUpcomingItems" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</h3>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center">
+            <i class="fa-solid fa-circle-exclamation text-xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Terlambat PM</p>
+            <h3 id="statOverdueItems" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- BREAKDOWN & URGENT MAINTENANCE TABLE -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="glass-card p-5 rounded-2xl space-y-4">
+          <h3 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-chart-bar text-indigo-400"></i> Sebaran Kategori Peralatan
+          </h3>
+          
+          <div class="space-y-3 pt-2">
+            <div>
+              <div class="flex justify-between text-xs mb-1 font-semibold">
+                <span class="text-rose-400">Pemanas (Heating)</span>
+                <span id="catHeatingCount" class="text-slate-300">0</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div id="barHeating" class="bg-rose-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1 font-semibold">
+                <span class="text-cyan-400">Pendingin (Cooling)</span>
+                <span id="catCoolingCount" class="text-slate-300">0</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div id="barCooling" class="bg-cyan-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1 font-semibold">
+                <span class="text-amber-400">Lainnya (Other F&B)</span>
+                <span id="catOtherCount" class="text-slate-300">0</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div id="barOther" class="bg-amber-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-200 text-sm mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Mesin Membutuhkan Pemeliharaan Segera
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="text-slate-400 border-b border-slate-800 uppercase text-[10px] tracking-wider">
+                    <th class="pb-3 font-semibold">Mesin</th>
+                    <th class="pb-3 font-semibold">Kategori</th>
+                    <th class="pb-3 font-semibold">Lokasi</th>
+                    <th class="pb-3 font-semibold">Status PM</th>
+                    <th class="pb-3 text-right font-semibold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardDueTable" class="divide-y divide-slate-800/60 text-slate-300">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: JADWAL PM OTOMATIS -->
+    <section id="tab-schedule" class="tab-content space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Jadwal PM Otomatis Mingguan</h1>
+          <p class="text-slate-400 text-xs mt-1">Perhitungan otomatis siklus perawatan mingguan (7 hari) berbasis tanggal maintenance terakhir.</p>
+        </div>
+        <div>
+          <select id="scheduleFilterCat" onchange="renderScheduleTable()" class="bg-slate-900 border border-slate-800 text-xs rounded-xl px-3.5 py-2 font-medium text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="ALL">Semua Kategori</option>
+            <option value="Pemanas">Pemanas (Heating)</option>
+            <option value="Pendingin">Pendingin (Cooling)</option>
+            <option value="Lainnya">Lainnya (Other)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-900/80 text-slate-400 text-[11px] uppercase tracking-wider font-semibold border-b border-slate-800">
+                <th class="p-4">Status PM</th>
+                <th class="p-4">Nama Peralatan</th>
+                <th class="p-4">Kategori & Lokasi</th>
+                <th class="p-4">PM Terakhir</th>
+                <th class="p-4">Jatuh Tempo berikutnya</th>
+                <th class="p-4 text-center">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody" class="divide-y divide-slate-800/80 text-xs text-slate-300">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DATA MESIN / ITEM LIST -->
+    <section id="tab-items" class="tab-content space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Inventaris Peralatan F&B</h1>
+          <p class="text-slate-400 text-xs mt-1">Daftar lengkap mesin pemanas, pendingin, dan perlengkapan dapur yang dikelompokkan per kategori.</p>
+        </div>
+        <button onclick="openModalAddItem()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/20 text-xs transition">
+          <i class="fa-solid fa-plus"></i> Tambah Item Baru
+        </button>
+      </div>
+
+      <!-- Controls & Sub-Tab Category Badges -->
+      <div class="glass-card p-4 rounded-2xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+          <input type="text" id="searchItemInput" onkeyup="renderItemsList()" placeholder="Cari berdasarkan nama mesin, merk, serial number, lokasi..." class="w-full pl-9 pr-4 py-2 bg-slate-900/90 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+
+        <!-- Category Grouping Tabs -->
+        <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+          <button onclick="setCategoryTab('ALL')" id="catTab-ALL" class="cat-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow-md">
+            <span>Semua</span>
+            <span id="badgeCatAll" class="bg-indigo-950/60 text-indigo-200 px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+          </button>
+
+          <button onclick="setCategoryTab('Pemanas')" id="catTab-Pemanas" class="cat-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition">
+            <i class="fa-solid fa-fire text-rose-400 text-[11px]"></i>
+            <span>Pemanas</span>
+            <span id="badgeCatHeating" class="bg-rose-500/20 text-rose-300 border border-rose-500/30 px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+          </button>
+
+          <button onclick="setCategoryTab('Pendingin')" id="catTab-Pendingin" class="cat-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition">
+            <i class="fa-solid fa-snowflake text-cyan-400 text-[11px]"></i>
+            <span>Pendingin</span>
+            <span id="badgeCatCooling" class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+          </button>
+
+          <button onclick="setCategoryTab('Lainnya')" id="catTab-Lainnya" class="cat-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition">
+            <i class="fa-solid fa-gears text-amber-400 text-[11px]"></i>
+            <span>Lainnya</span>
+            <span id="badgeCatOther" class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grouped Items Grid Container -->
+      <div id="itemsGroupedContainer" class="space-y-8">
+      </div>
+    </section>
+
+    <!-- TAB 4: RIWAYAT MAINTENANCE -->
+    <section id="tab-history" class="tab-content space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Riwayat & Laporan Maintenance</h1>
+          <p class="text-slate-400 text-xs mt-1">Rekam histori pemeliharaan preventif, log kerusakan, dan perbaikan korektif.</p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+          <h3 class="font-bold text-slate-200 text-xs">Histori Pelaksanaan</h3>
+          <span id="historyTotalBadge" class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full font-semibold">0 Total Log</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-900/80 text-slate-400 text-[11px] uppercase tracking-wider font-semibold border-b border-slate-800">
+                <th class="p-4">Tanggal Eksekusi</th>
+                <th class="p-4">Nama Peralatan</th>
+                <th class="p-4">Teknisi / SPV</th>
+                <th class="p-4">Status Hasil</th>
+                <th class="p-4">Foto Sebelum / Sesudah</th>
+                <th class="p-4 text-center">Laporan</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody" class="divide-y divide-slate-800/80 text-xs text-slate-300">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: PENGATURAN SYSTEM -->
+    <section id="tab-settings" class="tab-content space-y-6 hidden">
+      <div>
+        <h1 class="text-2xl font-bold text-white">Pengaturan System & Branding</h1>
+        <p class="text-slate-400 text-xs mt-1">Konfigurasi profil usaha, upload logo perusahaan, splashscreen, icon aplikasi, dan alert PM.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl max-w-3xl space-y-6">
+        <form id="settingsForm" onsubmit="saveSettings(event)" class="space-y-6">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Nama Perusahaan / Restoran</label>
+              <input type="text" id="settingCompName" required class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Ambang Notifikasi PM (Hari)</label>
+              <input type="number" id="settingAlertDays" min="1" max="7" value="3" required class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Alamat Lengkap Perusahaan</label>
+            <textarea id="settingCompAddress" rows="2" required class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+          </div>
+
+          <!-- Custom Logo, Splashscreen & App Icon Upload -->
+          <div class="pt-4 border-t border-slate-800/80 space-y-4">
+            <h3 class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Pengaturan Branding, Logo & Icon Aplikasi PWA</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <!-- Logo Upload -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-2">Logo Utama</label>
+                <div class="flex items-center gap-3">
+                  <div id="previewLogoBox" class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <i id="previewLogoDefault" class="fa-solid fa-building text-xl text-slate-600 hidden"></i>
+                    <img id="previewLogoImg" src="" class="w-full h-full object-cover">
+                  </div>
+                  <div class="flex-1 overflow-hidden">
+                    <input type="file" id="settingLogoInput" accept="image/*" onchange="handleLogoUpload(this)" class="block w-full text-[10px] text-slate-400 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Splash Image Upload -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-2">Banner Splashscreen</label>
+                <div class="flex items-center gap-3">
+                  <div id="previewSplashBox" class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <i id="previewSplashDefault" class="fa-solid fa-image text-xl text-slate-600 hidden"></i>
+                    <img id="previewSplashImg" src="" class="w-full h-full object-cover">
+                  </div>
+                  <div class="flex-1 overflow-hidden">
+                    <input type="file" id="settingSplashInput" accept="image/*" onchange="handleSplashUpload(this)" class="block w-full text-[10px] text-slate-400 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer">
+                  </div>
+                </div>
+              </div>
+
+              <!-- App Icon / PWA Icon Upload -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-2">Icon Aplikasi (PWA)</label>
+                <div class="flex items-center gap-3">
+                  <div id="previewAppIconBox" class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <i id="previewAppIconDefault" class="fa-solid fa-mobile-screen text-xl text-slate-600 hidden"></i>
+                    <img id="previewAppIconImg" src="" class="w-full h-full object-cover">
+                  </div>
+                  <div class="flex-1 overflow-hidden">
+                    <input type="file" id="settingAppIconInput" accept="image/*" onchange="handleAppIconUpload(this)" class="block w-full text-[10px] text-slate-400 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-1">Icon aplikasi akan digunakan untuk Favicon browser, Apple Touch Icon, serta Manifest PWA saat diinstal di perangkat.</p>
+          </div>
+
+          <div class="pt-4 flex flex-wrap gap-3 border-t border-slate-800">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg text-xs transition">
+              Simpan Perubahan Pengaturan
+            </button>
+            <button type="button" onclick="resetToDefaultData()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2.5 rounded-xl text-xs transition">
+              Reset Data
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL: TAMBAH / EDIT ITEM MESIN ==================== -->
+  <div id="modalItem" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-modal w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+        <h3 id="modalItemTitle" class="font-bold text-white text-sm">Tambah Mesin Baru</h3>
+        <button onclick="closeModalItem()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <form id="formItem" onsubmit="handleSaveItem(event)" class="p-6 overflow-y-auto space-y-4 flex-1">
+        <input type="hidden" id="itemId">
+        
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Nama Mesin / Peralatan</label>
+          <input type="text" id="itemName" required placeholder="Contoh: Commercial Espresso Machine 2 Group" class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Kategori Mesin</label>
+            <select id="itemCategory" required class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option value="Pemanas">Pemanas (Heating)</option>
+              <option value="Pendingin">Pendingin (Cooling)</option>
+              <option value="Lainnya">Lainnya (Other)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Lokasi Peralatan</label>
+            <input type="text" id="itemLocation" required placeholder="Dapur Main / Bar / Storage" class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Merk / Sub-Kategori</label>
+            <input type="text" id="itemBrand" placeholder="Merk / Sub" class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Serial Number (SN)</label>
+            <input type="text" id="itemSN" placeholder="SN-XXXX-XXXX" class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Standar Pemeriksaan</label>
+          <textarea id="itemStandard" rows="3" placeholder="Standar operational maintenance..." class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Tanggal Maintenance Terakhir</label>
+          <input type="date" id="itemLastPM" required class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <p class="text-[11px] text-slate-500 mt-1">Jadwal PM berikutnya akan dihitung otomatis (+7 hari).</p>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModalItem()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-medium text-xs hover:bg-slate-700 transition">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-xl font-semibold text-xs hover:bg-indigo-500 transition shadow-md">Simpan Mesin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: EXECUTE MAINTENANCE (DOUBLE SIGNATURE) ==================== -->
+  <div id="modalMaintenance" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-modal w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">Pelaksanaan Maintenance Preventif</span>
+          <h3 id="pmModalMachineName" class="font-bold text-white text-base">Nama Mesin</h3>
+        </div>
+        <button onclick="closeModalPM()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="formExecutePM" onsubmit="handleSavePMExecution(event)" class="p-6 overflow-y-auto space-y-6 flex-1">
+        <input type="hidden" id="pmTargetItemId">
+
+        <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 flex flex-wrap justify-between text-xs text-slate-400 gap-2">
+          <div><span class="text-slate-500">Kategori:</span> <strong id="pmModalCategory" class="text-slate-200">-</strong></div>
+          <div><span class="text-slate-500">Lokasi:</span> <strong id="pmModalLocation" class="text-slate-200">-</strong></div>
+          <div><span class="text-slate-500">SN:</span> <strong id="pmModalSN" class="text-slate-200">-</strong></div>
+        </div>
+
+        <!-- Checklist -->
+        <div>
+          <label class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-2.5 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-indigo-400"></i> Checklist Perawatan Spesifik Mesin
+          </label>
+          <div id="checklistContainer" class="space-y-2 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+          </div>
+        </div>
+
+        <!-- Upload Foto Sebelum & Sesudah -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-2">Foto Sebelum Maintenance</label>
+            <div class="border-2 border-dashed border-slate-800 hover:border-slate-700 rounded-xl p-3 text-center bg-slate-900/40 transition relative">
+              <input type="file" id="photoBeforeInput" accept="image/*" onchange="previewImage(this, 'previewBefore')" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+              <div id="previewBefore" class="flex flex-col items-center justify-center min-h-[100px]">
+                <i class="fa-solid fa-camera text-2xl text-slate-600 mb-2"></i>
+                <span class="text-[11px] text-slate-400">Klik / Upload Foto Sebelum</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-2">Foto Sesudah Maintenance</label>
+            <div class="border-2 border-dashed border-slate-800 hover:border-slate-700 rounded-xl p-3 text-center bg-slate-900/40 transition relative">
+              <input type="file" id="photoAfterInput" accept="image/*" onchange="previewImage(this, 'previewAfter')" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+              <div id="previewAfter" class="flex flex-col items-center justify-center min-h-[100px]">
+                <i class="fa-solid fa-camera text-2xl text-slate-600 mb-2"></i>
+                <span class="text-[11px] text-slate-400">Klik / Upload Foto Sesudah</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status & Catatan Kerusakan -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Status Hasil Inspeksi</label>
+            <select id="pmResultStatus" required class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500">
+              <option value="Selesai & Lolos (Pass)">Selesai & Lolos (Kondisi Baik)</option>
+              <option value="Perlu Perbaikan (Fail)">Perlu Perbaikan (Corrective Action Required)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Catatan Kerusakan & Corrective Maintenance</label>
+            <textarea id="pmNotes" rows="3" placeholder="Catat temuan kerusakan, penggantian sparepart, atau perbaikan korektif..." class="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+          </div>
+        </div>
+
+        <!-- DOUBLE SIGNATURE SECTION: TEKNISI & SPV/MANAGER -->
+        <div class="space-y-5 pt-4 border-t border-slate-800">
+          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-signature text-indigo-400"></i> Otorisasi & Tanda Tangan Digital
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- 1. Tanda Tangan Teknisi -->
+            <div class="space-y-2">
+              <label class="block text-xs font-semibold text-slate-400 uppercase">1. Nama Teknisi Pelaksana</label>
+              <input type="text" id="pmTechnicianName" required placeholder="Nama Lengkap Teknisi" class="w-full p-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500">
+              
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-[11px] text-slate-500">TTD Teknisi:</span>
+                <button type="button" onclick="clearCanvas('techCanvas')" class="text-[11px] text-rose-400 hover:text-rose-300 font-medium">Clear</button>
+              </div>
+              <div class="border border-slate-800 rounded-xl bg-slate-900 overflow-hidden">
+                <canvas id="techCanvas" class="w-full h-28 touch-none cursor-crosshair"></canvas>
+              </div>
+            </div>
+
+            <!-- 2. Tanda Tangan SPV / Manager -->
+            <div class="space-y-2">
+              <label class="block text-xs font-semibold text-slate-400 uppercase">2. Nama SPV / Manager</label>
+              <input type="text" id="pmSpvName" required placeholder="Nama Lengkap SPV / Manager" class="w-full p-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500">
+              
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-[11px] text-slate-500">TTD SPV / Manager:</span>
+                <button type="button" onclick="clearCanvas('spvCanvas')" class="text-[11px] text-rose-400 hover:text-rose-300 font-medium">Clear</button>
+              </div>
+              <div class="border border-slate-800 rounded-xl bg-slate-900 overflow-hidden">
+                <canvas id="spvCanvas" class="w-full h-28 touch-none cursor-crosshair"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModalPM()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-medium text-xs hover:bg-slate-700 transition">Batal</button>
+          <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-xl font-semibold text-xs hover:bg-emerald-500 transition shadow-lg shadow-emerald-600/20">Simpan & Complete PM</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: DETAIL REPORT & PRINT ==================== -->
+  <div id="modalReport" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-modal w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between no-print">
+        <h3 class="font-bold text-white text-sm">Detail Laporan Maintenance</h3>
+        <button onclick="closeModalReport()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div id="printArea" class="p-6 overflow-y-auto space-y-4 text-xs">
+      </div>
+
+      <div class="p-4 border-t border-slate-800 flex justify-end gap-3 no-print">
+        <button onclick="closeModalReport()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-medium text-xs">Tutup</button>
+        <button onclick="window.print()" class="px-4 py-2 bg-amber-500 text-slate-950 rounded-xl font-bold text-xs hover:bg-amber-400 transition flex items-center gap-2">
+          <i class="fa-solid fa-print"></i> Cetak Laporan PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LOGIC JAVASCRIPT & DATA INJECTION ==================== -->
+  <script>
+    // RAW LOGO BASE64 FROM BACKUP DATA
+    const BACKUP_LOGO_BASE64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCADIAMgDASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAYHAwUIBAIB/8QAGwEBAAidaQEAAAAAAAAAAAAAAAEDAgQFBgf/2gAMAw54DAAIAAAABAAAAAAAAAAAAAAAAAGggNnWsnWVst7llbKoxeCo59Vw98K+SAAAAAAAiW2qi70H5+Gx7AAB+/gsSWUjbOt47airgAAAAAD4K0jv38bv0kJvAGoyw275+oySOOZMabsfP1pfNgAAAAHh93lmylclK3R0/f/Qp3R8yrjP47D8d5mttjGPr6Hhc31Dpjz/R3J7PP6Od84BgAAAAqa2Vk8U+jpmmur6j0b6n9Dns9BaOnMM4bv718r1ufCLRkfvs7dU27gnlGM0HO8OAAAAABjqm2vLn0qZ/N3pdv3PnyZE5hGQ3arFa+H06nhgw5oAAAAAAH5GpMm+stZcCzsU/s7NEZkv6r44RQAAAABH6qmHK/T2OgLEoStbMujo9ItdVisXli0M56CrShr9owrHpXnzdZTdLh2dytjJW0bsy648HGfSmvXTPRPP80XZluRzqAAK65j6i5Z7O31VyDu7dznVa6bRbCIP5d3OL8/BO6EvLXrqHzdidXZ+nFQ8rxiUY9j7sIikl8uzhQvanH3YkRIRyNUABiy6iXs9cI8lmU8+IkJkgOKZsfDCM8RNfyGZ4SXPEMJKcZK19kp9jrrKWIwZ6cQAAAAAAAAAAAAAAAAAAAAAAAAAAAP/EACsQAAEEAQIEBQQDA産1..."
+
+    const DEFAULT_SVG_ICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%234f46e5'/><path d='M360 160h-48v-24c0-22.1-17.9-40-40-40h-32c-22.1 0-40 17.9-40 40v24h-48c-22.1 0-40 17.9-40 40v240c0 22.1 17.9 40 40 40h248c22.1 0 40-17.9 40-40V200c0-22.1-17.9-40-40-40zm-120-24c0-4.4 3.6-8 8-8h32c4.4 0 8 3.6 8 8v24h-48v-24zm120 264H152V200h208v200z' fill='%23ffffff'/><circle cx='256' cy='300' r='36' fill='%2338bdf8'/></svg>";
+
+    // Dynamic Manifest Generation Function
+    function updatePwaManifest(iconUrl) {
+      const pwaManifestData = {
+        name: "M&R - Preventive Maintenance PRO",
+        short_name: "M&R",
+        description: "Aplikasi Manajemen Perawatan Preventif Peralatan F&B",
+        start_url: "./",
+        display: "standalone",
+        background_color: "#020617",
+        theme_color: "#020617",
+        icons: [
+          {
+            src: iconUrl || DEFAULT_SVG_ICON,
+            sizes: "192x192 512x512",
+            type: "image/svg+xml",
+            purpose: "any maskable"
+          }
+        ]
+      };
+
+      const manifestBlob = new Blob([JSON.stringify(pwaManifestData)], { type: 'application/json' });
+      const manifestLink = document.getElementById('pwaManifestLink');
+      if(manifestLink) {
+        manifestLink.setAttribute('href', URL.createObjectURL(manifestBlob));
+      }
+    }
+
+    // SERVICE WORKER INLINE REGISTRATION (OFFLINE CACHING)
+    if ('serviceWorker' in navigator) {
+      const swCode = `
+        const CACHE_NAME = 'M&R-pm-cache-v1';
+        self.addEventListener('install', (e) => {
+          self.skipWaiting();
+        });
+        self.addEventListener('activate', (e) => {
+          e.waitUntil(clients.claim());
+        });
+        self.addEventListener('fetch', (e) => {
+          e.respondWith(
+            fetch(e.request).catch(() => caches.match(e.request))
+          );
+        });
+      `;
+      const swBlob = new Blob([swCode], { type: 'text/javascript' });
+      const swUrl = URL.createObjectURL(swBlob);
+
+      navigator.serviceWorker.register(swUrl)
+        .then(() => console.log('PWA Service Worker Activated'))
+        .catch(err => console.log('SW Registration error:', err));
+    }
+
+    // PWA INSTALLATION PROMPT HANDLER
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      const headerBtn = document.getElementById('btnHeaderInstall');
+      const desktopBtn = document.getElementById('btnDesktopInstall');
+      const pwaBanner = document.getElementById('pwaBanner');
+
+      if (headerBtn) headerBtn.classList.remove('hidden');
+      if (desktopBtn) desktopBtn.classList.remove('hidden');
+      if (pwaBanner && !localStorage.getItem('pwa_banner_dismissed')) {
+        pwaBanner.classList.remove('hidden');
+      }
+    });
+
+    function triggerPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the PWA install prompt');
+            dismissPwaBanner();
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        alert("Instalasi PWA sudah aktif atau tidak didukung di browser ini. Di iOS, gunakan menu Share -> 'Add to Home Screen'.");
+      }
+    }
+
+    function dismissPwaBanner() {
+      const pwaBanner = document.getElementById('pwaBanner');
+      if (pwaBanner) pwaBanner.classList.add('hidden');
+      localStorage.setItem('pwa_banner_dismissed', 'true');
+    }
+
+    // BACKUP ITEMS (61 ITEMS)
+    const BACKUP_ITEMS = [
+      { id: "item_1792433738182_0", name: "Pintu & Jendela", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Kaca terpasang, engsel tidak macet atau berbunyi bisa di kunci" },
+      { id: "item_1792433738182_1", name: "Cermin", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak retak lampu belakang menyala" },
+      { id: "item_1792433738182_2", name: "Wastafel", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak mampat dan tidak bocor" },
+      { id: "item_1792433738182_3", name: "Lantai", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak copot tidak pecah" },
+      { id: "item_1792433738182_4", name: "Toilet & Urinoir", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak mampat dan tidak bocor" },
+      { id: "item_1792433738182_5", name: "Kran", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Keluar air tidak goyang tidak bocor" },
+      { id: "item_1792433738182_6", name: "Rak & Meja", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak goyang, HPL tidak terkelupas" },
+      { id: "item_1792433738182_7", name: "Paving", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Outdoor", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Rata, tidak bergelombang, tidak lepas" },
+      { id: "item_1792433738182_8", name: "Panel Genset ATS", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "Panel Room", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Lampu Indikator Menyala, Posisi Switch Manual/Otomatis, Indikator Tegangan 220/380V, MCCB ON, Pintu Terkunci" },
+      { id: "item_1792433738182_9", name: "Stop Kontak", category: "Lainnya", subCategory: "Power", brand: "MEP", sn: "-", location: "Area Outlet", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Body tidak pecah, menempel baik, tegangan 220V" },
+      { id: "item_1792433738182_10", name: "Fryer Manual", category: "Pemanas", subCategory: "Fryer", brand: "Equipment", sn: "-", location: "Kitchen", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Pemanasan max 15 mnt ke 175°C, Pengecekan Fisik & Fungsi Komponen" },
+      { id: "item_1792433738182_11", name: "Showcase", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Bar Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Suhu Chiller 0-5°C, karet pintu rapat, Kompresor Normal, Lampu Menyala" },
+      { id: "item_1792434424989", name: "Plafond", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Rata,Tidak bernoda bocor,Bersih,Tidak terkelupas" },
+      { id: "item_1792434548577", name: "Dinding", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Warna tidak pudar,Tidak retak,Tidak bergelembung,Tidak mengelupas" },
+      { id: "item_1792434640898", name: "Railing", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak goyang,Cat tidak terkelupas" },
+      { id: "item_1792434693653", name: "Partisi", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Rata,Tidak ada noda,Tidak retak" },
+      { id: "item_1792434744042", name: "Mural", category: "Lainnya", subCategory: "Interior", brand: "Building", sn: "-", location: "Interior", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak ada noda,Tidak retak,Tidak kusam" },
+      { id: "item_1792435030829", name: "Landscape", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Outdoor Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Subur,Tidak ada yang mati" },
+      { id: "item_1792435151211", name: "Kanstin", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Outdoor Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak pecah,Rata" },
+      { id: "item_1792435224379", name: "Grease Trap", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Outdoor/Kitchen", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Bersih,Tidak bocor,Tertutup rapat" },
+      { id: "item_1792435329894", name: "Marka", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Parkiran", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Terlihat jelas,Tidak pudar" },
+      { id: "item_1792435422219", name: "Dumpster", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Waste Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak retak,Tertutup,Pintu tidak rusak" },
+      { id: "item_1792435541420", name: "Ground Tank", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Utility Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Terisi penuh,Tidak keruh,Tidak bocor,Tertutup rapat" },
+      { id: "item_1792435600452", name: "Septictank", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Outdoor Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Saluran udara tidak tertutup" },
+      { id: "item_1792435720992", name: "Rooftank", category: "Lainnya", subCategory: "Outdoor", brand: "Infrastruktur", sn: "-", location: "Rooftop Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Terisi penuh,Tidak bocor,Tidak keruh,Tertutup rapat" },
+      { id: "item_1792435858034", name: "Kanopi", category: "Lainnya", subCategory: "Indoor/Outdoor", brand: "Facade", sn: "-", location: "Facade Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak goyang,Tidak bocor" },
+      { id: "item_1792436004683", name: "Repainting Dinding Facade", category: "Lainnya", subCategory: "Indoor/Outdoor", brand: "Facade", sn: "-", location: "Facade Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Warna tidak pudar,Tidak retak,Tidak mengelupas" },
+      { id: "item_1792436062474", name: "Kaca Facade", category: "Lainnya", subCategory: "Indoor/Outdoor", brand: "Facade", sn: "-", location: "Facade Area", lastPM: "2026-10-19", nextPM: "2026-10-26", standard: "Tidak pecah/retak,bersih" },
+      { id: "item_1792657263889", name: "Panel MDP", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "Panel Room", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Indikator Tegangan 220/380V, Grounding Bagus, MCCB ON, Panel Bersih" },
+      { id: "item_1792657548495", name: "Panel Exhaust & Fresh Air", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "Kitchen Control", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Switch Manual/Auto Berfungsi, Tombol Hijau Menyala, Kabel Rapi" },
+      { id: "item_1792657589335", name: "Panel Server", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "Server Room", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Lampu Indikator Menyala, Tegangan Stabil, Kabel Terkunci Rapi" },
+      { id: "item_1792657799941", name: "Panel Alarm Gas", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "Kitchen Area", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Lampu Power Menyala, Lampu Buzzer Normal, Posisi Switch ON" },
+      { id: "item_1792658242379", name: "Lampu Sorot & Fasade PJU", category: "Lainnya", subCategory: "Pencahayaan", brand: "MEP", sn: "-", location: "Outdoor & Facade", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Menyala, Tidak Berdebu" },
+      { id: "item_1792658440279", name: "Saklar Listrik", category: "Lainnya", subCategory: "Power", brand: "MEP", sn: "-", location: "All Area", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Berfungsi,Fisik Tidak Pecah Dan Tidak Berdebu" },
+      { id: "item_1792658509552", name: "Jaringan Data & WiFi", category: "Lainnya", subCategory: "Internet", brand: "MEP", sn: "-", location: "Server Area", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Berfungsi Normal" },
+      { id: "item_1792658561707", name: "Kabel Instalasi", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "All Building", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Tidak Mengelupas, Tersambung Dengan Baik" },
+      { id: "item_1792658651876", name: "CCTV System", category: "Lainnya", subCategory: "Kamera", brand: "MEP", sn: "-", location: "All Outlets", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Berfungsi, Tidak Berdebu,Sudut Kamera Sesuai" },
+      { id: "item_1792658871787", name: "Wallfan & Ceilingfan", category: "Pendingin", subCategory: "Kipas", brand: "MEP", sn: "-", location: "Dining Area", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Switch Berfungsi, Kabel Tidak Terkelupas Maupun Terbakar" },
+      { id: "item_1792659043152", name: "Pemipaan Air", category: "Lainnya", subCategory: "Plumbing", brand: "MEP", sn: "-", location: "Plumbing Shaft", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Tidak Mampet, Tidak Bocor/Rembes,Saluran Bersih" },
+      { id: "item_1792659664404", name: "Genset Power Unit", category: "Lainnya", subCategory: "Listrik", brand: "MEP", sn: "-", location: "Genset Room", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Solar 50%+, Air Radiator 100%, Oli Bersih, Indikator Normal" },
+      { id: "item_1792660740137", name: "Reklame & Signage", category: "Lainnya", subCategory: "Reklame", brand: "MEP", sn: "-", location: "Facade & Pole", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Lampu Menyala, Tegangan Travo 12-24V, Tidak Korosi" },
+      { id: "item_1792662163207", name: "Gas Safety System", category: "Lainnya", subCategory: "GAS", brand: "MEP", sn: "-", location: "Kitchen Gas Central", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Detector Sensitif, Selenoid & Regulator Normal, Alarm Nyaring" },
+      { id: "item_1792662348380", name: "Meja, Kursi & Trash Bin", category: "Lainnya", subCategory: "Furniture", brand: "Building", sn: "-", location: "Dining Hall", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Tidak Goyang, HPL Rapi, Engsel Trashbin Baik" },
+      { id: "item_1792662688602", name: "IPAL System", category: "Lainnya", subCategory: "Pengolahan Air", brand: "MEP", sn: "-", location: "Waste Treatment", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Pompa/Aerator Normal, Dosis Chemical Rutin" },
+      { id: "item_1792663183215", name: "Water Treatment", category: "Lainnya", subCategory: "Pengolahan Air", brand: "MEP", sn: "-", location: "Water Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Backwash Rutin, Pressure 2 Bar, Pompa Halus" },
+      { id: "item_1792665274517", name: "FRYMASTER 3000", category: "Pemanas", subCategory: "Fryer", brand: "Equipment", sn: "-", location: "Kitchen Line", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Oil pump, Sensor, Valve OK. Suhu 166°C dalam 15 menit" },
+      { id: "item_1792665520237", name: "Manual Oil Pump", category: "Pemanas", subCategory: "Fryer", brand: "Equipment", sn: "-", location: "Kitchen Line", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Pompa Berfungsi Normal, Saluran Minyak Tidak Mampat" },
+      { id: "item_1792666196183", name: "Kitchen Hood & Exhaust", category: "Pemanas", subCategory: "Kitchen", brand: "Equipment", sn: "-", location: "Kitchen Canopy", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Airflow Bagus, Vbelt Utuh, Bearing Pelumasan Cukup" },
+      { id: "item_1792666391796", name: "Water Heater", category: "Pemanas", subCategory: "Kitchen", brand: "Equipment", sn: "-", location: "Dishwashing", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Lampu Indikator Menyala, Instalasi Pipa Tidak Bocor, Pressure 2 Bar" },
+      { id: "item_1792666736665", name: "Warmer Klakat Dimsum", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Dimsum Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Indikator Suhu 82-87°C, Suhu Dalam Min 75°C" },
+      { id: "item_1792666783248", name: "Towel Warmer", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Service Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Indikator Suhu 82-87°C, Suhu Dalam Min 75°C" },
+      { id: "item_1792666983711", name: "CHC Warmer", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Holding Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Indikator Suhu 82-87°C, Timer & Alarm Nyaring" },
+      { id: "item_1792667008387", name: "RHC Warmer", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Holding Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Indikator Suhu 82-87°C, Timer & Alarm Nyaring" },
+      { id: "item_1792667279058", name: "Gas Ricecooker Getra", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Kitchen Rice Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Sensor Otomatis OK, Api Biru, Igniter Bersih" },
+      { id: "item_1792667464103", name: "Tea/Water Boiler", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Beverage Bar", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Thermostat Otomatis OK, Kran Tidak Bocor" },
+      { id: "item_1792667569515", name: "UHC-SIDE DISH", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Prep Station", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Indikator Suhu 82-87°C, Suhu Dalam Min 75°C" },
+      { id: "item_1792667835102", name: "S/S Fry Bagging Station", category: "Pemanas", subCategory: "Warmer", brand: "Equipment", sn: "-", location: "Packing Line", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Lampu Menyala Baik, Kabel Utuh Tidak Terkelupas" },
+      { id: "item_1792668046597", name: "Tea Dispenser", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Bar Area", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suhu 0-5°C, Kran Tidak Bocor" },
+      { id: "item_1792668550405", name: "Ice Cream Machine Gelmatic", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Dessert Bar", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Tuas Normal, Pendingin Baik, Unit Tidak Bocor" },
+      { id: "item_1792668724470", name: "Ice Maker Hoshizaki", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Ice Storage", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suplay Air 2 Bar, Produksi Es Stabil, Filter Udara Bersih" },
+      { id: "item_1792668851345", name: "Upright Chiller", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Cold Storage Kitchen", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suhu Chiller 0-5°C, Evaporator Bersih Tanpa Bunga Es" },
+      { id: "item_1792669015262", name: "Upright Freezer", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Freezer Storage", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suhu Freezer -20°C, Evaporator Bersih" },
+      { id: "item_1792669369382", name: "Nestle Dispenser", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Beverage Bar", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suhu 0-5°C, Fisik Bersih & Rapi" },
+      { id: "item_1792669569967", name: "Walk In Chiller", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Main Cold Storage", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suhu Chiller 0-5°C, Karet Pintu Rapat, Evaporator Bersih" },
+      { id: "item_1792669830280", name: "Walk In Freezer", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Main Frozen Storage", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Suhu Freezer -20°C, Karet Pintu Rapat" },
+      { id: "item_1792670087528", name: "Walk In Chiller/Freezer (Outdoor)", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Outdoor Utility", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Unit Condenser Bersih, Kipas & Kompresor Halus" },
+      { id: "item_1792670133379", name: "AC Split (Indoor)", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Dining Room", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Mode Cool 17-19°C, Filter Bersih, Drainase Lancar" },
+      { id: "item_1792670683258", name: "AC Split (Outdoor)", category: "Pendingin", subCategory: "Refrigeration", brand: "Equipment", sn: "-", location: "Outdoor Wall", lastPM: "2026-10-22", nextPM: "2026-10-29", standard: "Kondensor Bersih, Kompresor Normal, Pipa Tidak Bocor" }
+    ];
+
+    const DEFAULT_SETTINGS = {
+      compName: "DIKICHI",
+      compAddress: "Jl. Adi Sucipto, Kenaiban, Manahan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57174",
+      alertDays: 3,
+      customLogo: BACKUP_LOGO_BASE64,
+      customSplash: BACKUP_LOGO_BASE64,
+      customAppIcon: DEFAULT_SVG_ICON
+    };
+
+    const CHECKLISTS = {
+      Pemanas: [
+        "Inspeksi & pembersihan Heating Element / Burner",
+        "Kalibrasi & uji akurasi Thermostat / Pengatur Suhu",
+        "Pembersihan kerak air / grease trap dari sisa lemak",
+        "Pemeriksaan kabel power, grounding & safety switch",
+        "Uji fungsi suhu maksimum & keandalan sekring (Fuse)"
+      ],
+      Pendingin: [
+        "Inspeksi & pembersihan Condenser Coil & Evaporator",
+        "Pemeriksaan tekanan Freon / Refrigerant Leak Check",
+        "Pemeriksaan & pembersihan Rubber Gasket (Karet Pintu)",
+        "Pengujian suhu target vs realita termometer",
+        "Pembersihan saluran drainase air pembuangan"
+      ],
+      Lainnya: [
+        "Pemeriksaan fisik & fungsi komponen dasar",
+        "Uji kelistrikan, grounding & kabel power",
+        "Pembersihan rutin & pengecekan baut/engsel/dudukan",
+        "Pengecekan fungsi tombol & indikator operasional"
+      ]
+    };
+
+    let appSettings = JSON.parse(localStorage.getItem('fnb_pm_v3_settings')) || DEFAULT_SETTINGS;
+    let appItems = JSON.parse(localStorage.getItem('fnb_pm_v3_items')) || BACKUP_ITEMS;
+    let appHistory = JSON.parse(localStorage.getItem('fnb_pm_v3_history')) || [];
+
+    function getRelativeDate(daysOffset) {
+      const d = new Date();
+      d.setDate(d.getDate() + daysOffset);
+      return d.toISOString().split('T')[0];
+    }
+
+    function calculateNextPM(lastPMDateStr) {
+      const d = new Date(lastPMDateStr);
+      d.setDate(d.getDate() + 7);
+      return d.toISOString().split('T')[0];
+    }
+
+    function getDaysDiff(targetDateStr) {
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const target = new Date(targetDateStr);
+      target.setHours(0,0,0,0);
+      return Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+    }
+
+    function saveData() {
+      localStorage.setItem('fnb_pm_v3_settings', JSON.stringify(appSettings));
+      localStorage.setItem('fnb_pm_v3_items', JSON.stringify(appItems));
+      localStorage.setItem('fnb_pm_v3_history', JSON.stringify(appHistory));
+      updateUI();
+    }
+
+    // --- INITIALIZATION & SPLASH SCREEN LOGIC ---
+    let countdownVal = 5;
+
+    window.onload = function() {
+      applySettingsToUI();
+      updateUI();
+      initAllSignatureCanvases();
+
+      const countdownEl = document.getElementById('splashCountdown');
+      const interval = setInterval(() => {
+        countdownVal--;
+        if (countdownEl && countdownVal >= 0) {
+          countdownEl.innerText = countdownVal;
+        }
+        if (countdownVal <= 0) {
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      setTimeout(() => {
+        const splash = document.getElementById('splashScreen');
+        if (splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => { 
+            splash.style.display = 'none'; 
+            switchTab('dashboard');
+          }, 700);
+        }
+      }, 5000);
+    };
+
+    function applySettingsToUI() {
+      document.getElementById('splashCompName').innerText = appSettings.compName;
+      document.getElementById('splashCompAddress').innerText = appSettings.compAddress;
+      document.getElementById('headerCompName').innerText = appSettings.compName;
+      document.getElementById('headerCompAddress').innerText = appSettings.compAddress;
+      
+      document.getElementById('settingCompName').value = appSettings.compName;
+      document.getElementById('settingCompAddress').value = appSettings.compAddress;
+      document.getElementById('settingAlertDays').value = appSettings.alertDays || 3;
+
+      // Apply Logo
+      if (appSettings.customLogo) {
+        document.getElementById('headerDefaultIcon').classList.add('hidden');
+        const headImg = document.getElementById('headerCustomLogo');
+        headImg.src = appSettings.customLogo;
+        headImg.classList.remove('hidden');
+
+        document.getElementById('previewLogoDefault').classList.add('hidden');
+        const prevImg = document.getElementById('previewLogoImg');
+        prevImg.src = appSettings.customLogo;
+        prevImg.classList.remove('hidden');
+      }
+
+      // Apply Splash
+      if (appSettings.customSplash || appSettings.customLogo) {
+        const splashImgSrc = appSettings.customSplash || appSettings.customLogo;
+        document.getElementById('splashDefaultIcon').classList.add('hidden');
+        const splashImg = document.getElementById('splashCustomLogo');
+        splashImg.src = splashImgSrc;
+        splashImg.classList.add('hidden'); // default hidden if custom exists
+        splashImg.classList.remove('hidden');
+
+        document.getElementById('previewSplashDefault').classList.add('hidden');
+        const prevSplash = document.getElementById('previewSplashImg');
+        prevSplash.src = splashImgSrc;
+        prevSplash.classList.remove('hidden');
+      }
+
+      // Apply App Icon & Favicon & Manifest PWA
+      const iconSrc = appSettings.customAppIcon || DEFAULT_SVG_ICON;
+      document.getElementById('dynamicFavicon').setAttribute('href', iconSrc);
+      document.getElementById('dynamicAppleTouchIcon').setAttribute('href', iconSrc);
+      updatePwaManifest(iconSrc);
+
+      document.getElementById('previewAppIconDefault').classList.add('hidden');
+      const prevAppIcon = document.getElementById('previewAppIconImg');
+      prevAppIcon.src = iconSrc;
+      prevAppIcon.classList.remove('hidden');
+    }
+
+    function handleLogoUpload(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          appSettings.customLogo = e.target.result;
+          applySettingsToUI();
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handleSplashUpload(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          appSettings.customSplash = e.target.result;
+          applySettingsToUI();
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handleAppIconUpload(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          appSettings.customAppIcon = e.target.result;
+          applySettingsToUI();
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function saveSettings(e) {
+      e.preventDefault();
+      appSettings.compName = document.getElementById('settingCompName').value;
+      appSettings.compAddress = document.getElementById('settingCompAddress').value;
+      appSettings.alertDays = parseInt(document.getElementById('settingAlertDays').value) || 3;
+      
+      saveData();
+      applySettingsToUI();
+      alert('Pengaturan, logo, dan icon aplikasi berhasil disimpan!');
+    }
+
+    function resetToDefaultData() {
+      if(confirm("Kembalikan data, logo, dan icon ke sampel awal?")) {
+        appSettings = DEFAULT_SETTINGS;
+        appItems = BACKUP_ITEMS;
+        appHistory = [];
+        saveData();
+        applySettingsToUI();
+      }
+    }
+
+    // --- TAB SWITCHING ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/20');
+        btn.classList.add('text-slate-400', 'hover:bg-slate-800/70', 'hover:text-slate-200');
+      });
+
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeNav) {
+        activeNav.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/20');
+        activeNav.classList.remove('text-slate-400', 'hover:bg-slate-800/70', 'hover:text-slate-200');
+      }
+
+      if(tabId === 'schedule') renderScheduleTable();
+      if(tabId === 'items') renderItemsList();
+      if(tabId === 'history') renderHistoryTable();
+      if(tabId === 'dashboard') renderDashboard();
+    }
+
+    function getItemStatus(nextPMDateStr) {
+      const diff = getDaysDiff(nextPMDateStr);
+      if (diff < 0) {
+        return { 
+          label: `Terlambat ${Math.abs(diff)} Hari`, 
+          badge: 'bg-rose-500/10 text-rose-400 border border-rose-500/30', 
+          code: 'OVERDUE', diff 
+        };
+      } else if (diff <= appSettings.alertDays) {
+        return { 
+          label: diff === 0 ? 'Jatuh Tempo Hari Ini' : `Jatuh Tempo ${diff} Hari Lagi`, 
+          badge: 'bg-amber-500/10 text-amber-400 border border-amber-500/30', 
+          code: 'DUE_SOON', diff 
+        };
+      } else {
+        return { 
+          label: 'Kondisi Baik / OK', 
+          badge: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30', 
+          code: 'SAFE', diff 
+        };
+      }
+    }
+
+    // --- DASHBOARD OVERVIEW ---
+    function updateUI() {
+      renderDashboard();
+      renderScheduleTable();
+      renderItemsList();
+      renderHistoryTable();
+    }
+
+    function renderDashboard() {
+      let total = appItems.length;
+      let safe = 0, upcoming = 0, overdue = 0;
+      let catHeating = 0, catCooling = 0, catOther = 0;
+      let dueItemsList = [];
+
+      appItems.forEach(item => {
+        const status = getItemStatus(item.nextPM);
+        if(status.code === 'SAFE') safe++;
+        if(status.code === 'DUE_SOON') { upcoming++; dueItemsList.push({item, status}); }
+        if(status.code === 'OVERDUE') { overdue++; dueItemsList.push({item, status}); }
+
+        if(item.category === 'Pemanas') catHeating++;
+        else if(item.category === 'Pendingin') catCooling++;
+        else catOther++;
+      });
+
+      document.getElementById('statTotalItems').innerText = total;
+      document.getElementById('statSafeItems').innerText = safe;
+      document.getElementById('statUpcomingItems').innerText = upcoming;
+      document.getElementById('statOverdueItems').innerText = overdue;
+
+      const totalDueCount = upcoming + overdue;
+      const badge = document.getElementById('badgeDueCount');
+      if (totalDueCount > 0) {
+        badge.innerText = totalDueCount;
+        badge.classList.remove('hidden');
+        document.getElementById('dueAlertBanner').classList.remove('hidden');
+        document.getElementById('dueAlertMessage').innerText = `Terdapat ${totalDueCount} peralatan F&B yang perlu segera ditindaklanjuti.`;
+      } else {
+        badge.classList.add('hidden');
+        document.getElementById('dueAlertBanner').classList.add('hidden');
+      }
+
+      document.getElementById('catHeatingCount').innerText = catHeating;
+      document.getElementById('catCoolingCount').innerText = catCooling;
+      document.getElementById('catOtherCount').innerText = catOther;
+
+      const safeTotal = total || 1;
+      document.getElementById('barHeating').style.width = `${(catHeating/safeTotal)*100}%`;
+      document.getElementById('barCooling').style.width = `${(catCooling/safeTotal)*100}%`;
+      document.getElementById('barOther').style.width = `${(catOther/safeTotal)*100}%`;
+
+      const tbody = document.getElementById('dashboardDueTable');
+      tbody.innerHTML = '';
+
+      if(dueItemsList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">Semua mesin terjadwal aman dan dalam kondisi optimal.</td></tr>`;
+      } else {
+        dueItemsList.forEach(({item, status}) => {
+          tbody.innerHTML += `
+            <tr class="hover:bg-slate-900/40">
+              <td class="py-3 font-semibold text-white">${item.name}</td>
+              <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-300">${item.category}</span></td>
+              <td class="py-3 text-slate-400">${item.location}</td>
+              <td class="py-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${status.badge}">${status.label}</span></td>
+              <td class="py-3 text-right">
+                <button onclick="openModalPM('${item.id}')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1 rounded-lg text-xs transition">
+                  Eksekusi PM
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+    }
+
+    // --- SCHEDULE TAB ---
+    function renderScheduleTable() {
+      const catFilter = document.getElementById('scheduleFilterCat').value;
+      const tbody = document.getElementById('scheduleTableBody');
+      tbody.innerHTML = '';
+
+      let filtered = appItems;
+      if(catFilter !== 'ALL') {
+        filtered = filtered.filter(i => i.category === catFilter);
+      }
+
+      if(filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">Tidak ada mesin untuk kategori terpilih.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const status = getItemStatus(item.nextPM);
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-900/50 transition">
+            <td class="p-4"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${status.badge}">${status.label}</span></td>
+            <td class="p-4 font-bold text-white">${item.name}<div class="text-[11px] text-slate-500 font-normal">Sub: ${item.subCategory || item.brand || '-'}</div></td>
+            <td class="p-4 text-slate-300">
+              <span class="font-medium text-slate-200">${item.category}</span>
+              <div class="text-[11px] text-slate-500">${item.location}</div>
+            </td>
+            <td class="p-4 text-slate-400">${item.lastPM}</td>
+            <td class="p-4 font-bold text-amber-400">${item.nextPM}</td>
+            <td class="p-4 text-center">
+              <button onclick="openModalPM('${item.id}')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-3 py-1.5 rounded-xl text-xs transition shadow-md">
+                Proses PM
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // --- ITEMS MANAGEMENT ---
+    let activeCategoryTab = 'ALL';
+
+    function setCategoryTab(category) {
+      activeCategoryTab = category;
+
+      document.querySelectorAll('.cat-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+        btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
+      });
+
+      const activeBtn = document.getElementById(`catTab-${category}`);
+      if(activeBtn) {
+        activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+        activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
+      }
+
+      renderItemsList();
+    }
+
+    function renderItemsList() {
+      const search = document.getElementById('searchItemInput').value.toLowerCase();
+      const container = document.getElementById('itemsGroupedContainer');
+      container.innerHTML = '';
+
+      let countAll = appItems.length;
+      let countHeating = appItems.filter(i => i.category === 'Pemanas').length;
+      let countCooling = appItems.filter(i => i.category === 'Pendingin').length;
+      let countOther = appItems.filter(i => i.category === 'Lainnya').length;
+
+      document.getElementById('badgeCatAll').innerText = countAll;
+      document.getElementById('badgeCatHeating').innerText = countHeating;
+      document.getElementById('badgeCatCooling').innerText = countCooling;
+      document.getElementById('badgeCatOther').innerText = countOther;
+
+      let filteredItems = appItems.filter(item => {
+        return item.name.toLowerCase().includes(search) || 
+               (item.brand && item.brand.toLowerCase().includes(search)) ||
+               (item.subCategory && item.subCategory.toLowerCase().includes(search)) ||
+               item.location.toLowerCase().includes(search);
+      });
+
+      if(filteredItems.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center glass-card rounded-2xl text-slate-500">Tidak ada mesin F&B ditemukan.</div>`;
+        return;
+      }
+
+      const categoriesToDisplay = activeCategoryTab === 'ALL' 
+        ? [
+            { key: 'Pemanas', title: 'Peralatan Pemanas (Heating)', icon: 'fa-fire', textClr: 'text-rose-400', borderClr: 'border-rose-500/30', bgGlow: 'from-rose-500/10' },
+            { key: 'Pendingin', title: 'Peralatan Pendingin (Cooling)', icon: 'fa-snowflake', textClr: 'text-cyan-400', borderClr: 'border-cyan-500/30', bgGlow: 'from-cyan-500/10' },
+            { key: 'Lainnya', title: 'Peralatan Lainnya (Building, MEP, Infrastruktur)', icon: 'fa-gears', textClr: 'text-amber-400', borderClr: 'border-amber-500/30', bgGlow: 'from-amber-500/10' }
+          ]
+        : [
+            activeCategoryTab === 'Pemanas' ? { key: 'Pemanas', title: 'Peralatan Pemanas (Heating)', icon: 'fa-fire', textClr: 'text-rose-400', borderClr: 'border-rose-500/30', bgGlow: 'from-rose-500/10' } :
+            activeCategoryTab === 'Pendingin' ? { key: 'Pendingin', title: 'Peralatan Pendingin (Cooling)', icon: 'fa-snowflake', textClr: 'text-cyan-400', borderClr: 'border-cyan-500/30', bgGlow: 'from-cyan-500/10' } :
+            { key: 'Lainnya', title: 'Peralatan Lainnya (Building, MEP, Infrastruktur)', icon: 'fa-gears', textClr: 'text-amber-400', borderClr: 'border-amber-500/30', bgGlow: 'from-amber-500/10' }
+          ];
+
+      categoriesToDisplay.forEach(catMeta => {
+        const catItems = filteredItems.filter(i => i.category === catMeta.key);
+
+        if (catItems.length === 0 && activeCategoryTab !== 'ALL') {
+          container.innerHTML += `
+            <div class="glass-card p-6 rounded-2xl text-center text-slate-500 text-xs">
+              Tidak ada peralatan pada kelompok ${catMeta.title}.
+            </div>`;
+          return;
+        }
+
+        if (catItems.length === 0) return;
+
+        let groupHTML = `
+          <div class="space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-slate-900 ${catMeta.borderClr} border flex items-center justify-center ${catMeta.textClr}">
+                  <i class="fa-solid ${catMeta.icon} text-sm"></i>
+                </div>
+                <h2 class="font-bold text-white text-base tracking-tight">${catMeta.title}</h2>
+              </div>
+              <span class="text-xs font-semibold text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">
+                ${catItems.length} Mesin
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        `;
+
+        catItems.forEach(item => {
+          const status = getItemStatus(item.nextPM);
+          groupHTML += `
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-slate-700 transition relative overflow-hidden">
+              <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br ${catMeta.bgGlow} to-transparent rounded-full blur-xl pointer-events-none"></div>
+              
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-900 border border-slate-800 ${catMeta.textClr}">${item.category}</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${status.badge}">${status.label}</span>
+                </div>
+                <h3 class="font-bold text-white text-sm leading-snug">${item.name}</h3>
+                <p class="text-[11px] text-slate-400 mt-1">${item.subCategory || item.brand || 'Umum'} &bull; Lokasi: ${item.location}</p>
+              </div>
+
+              ${item.standard ? `<div class="text-[11px] text-slate-400 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50 line-clamp-2"><strong>Standar:</strong> ${item.standard}</div>` : ''}
+
+              <div class="bg-slate-900/80 p-3 rounded-xl space-y-1.5 text-xs border border-slate-800/80">
+                <div class="flex justify-between text-slate-400">
+                  <span>PM Terakhir:</span>
+                  <span class="font-medium text-slate-200">${item.lastPM}</span>
+                </div>
+                <div class="flex justify-between text-slate-400">
+                  <span>Jatuh Tempo:</span>
+                  <span class="font-bold text-amber-400">${item.nextPM}</span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 pt-2 border-t border-slate-800/80">
+                <button onclick="openModalPM('${item.id}')" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-xl text-xs transition text-center shadow-md">
+                  Lakukan PM
+                </button>
+                <button onclick="openModalEditItem('${item.id}')" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button onclick="deleteItem('${item.id}')" class="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl transition">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        groupHTML += `
+            </div>
+          </div>
+        `;
+
+        container.innerHTML += groupHTML;
+      });
+    }
+
+    function openModalAddItem() {
+      document.getElementById('formItem').reset();
+      document.getElementById('itemId').value = '';
+      document.getElementById('modalItemTitle').innerText = 'Tambah Mesin Baru';
+      document.getElementById('itemLastPM').value = getRelativeDate(0);
+      document.getElementById('modalItem').classList.remove('hidden');
+    }
+
+    function openModalEditItem(id) {
+      const item = appItems.find(i => i.id === id);
+      if(!item) return;
+
+      document.getElementById('itemId').value = item.id;
+      document.getElementById('itemName').value = item.name;
+      document.getElementById('itemCategory').value = item.category;
+      document.getElementById('itemLocation').value = item.location;
+      document.getElementById('itemBrand').value = item.subCategory || item.brand || '';
+      document.getElementById('itemSN').value = item.sn || '';
+      document.getElementById('itemStandard').value = item.standard || '';
+      document.getElementById('itemLastPM').value = item.lastPM;
+
+      document.getElementById('modalItemTitle').innerText = 'Edit Data Mesin';
+      document.getElementById('modalItem').classList.remove('hidden');
+    }
+
+    function closeModalItem() {
+      document.getElementById('modalItem').classList.add('hidden');
+    }
+
+    function handleSaveItem(e) {
+      e.preventDefault();
+      const id = document.getElementById('itemId').value;
+      const name = document.getElementById('itemName').value;
+      const category = document.getElementById('itemCategory').value;
+      const location = document.getElementById('itemLocation').value;
+      const brand = document.getElementById('itemBrand').value;
+      const sn = document.getElementById('itemSN').value;
+      const standard = document.getElementById('itemStandard').value;
+      const lastPM = document.getElementById('itemLastPM').value;
+      const nextPM = calculateNextPM(lastPM);
+
+      if(id) {
+        const index = appItems.findIndex(i => i.id === id);
+        if(index !== -1) {
+          appItems[index] = { ...appItems[index], name, category, location, brand, subCategory: brand, sn, standard, lastPM, nextPM };
+        }
+      } else {
+        appItems.push({
+          id: 'item-' + Date.now(),
+          name, category, location, brand, subCategory: brand, sn, standard, lastPM, nextPM
+        });
+      }
+
+      saveData();
+      closeModalItem();
+    }
+
+    function deleteItem(id) {
+      if(confirm('Hapus mesin ini dari inventaris?')) {
+        appItems = appItems.filter(i => i.id !== id);
+        saveData();
+      }
+    }
+
+    // --- DOUBLE SIGNATURE CANVAS LOGIC ---
+    const sigState = {
+      tech: { canvas: null, ctx: null, drawing: false },
+      spv: { canvas: null, ctx: null, drawing: false }
+    };
+
+    function initAllSignatureCanvases() {
+      setupCanvas('techCanvas', 'tech');
+      setupCanvas('spvCanvas', 'spv');
+    }
+
+    function setupCanvas(canvasId, key) {
+      const c = document.getElementById(canvasId);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      sigState[key].canvas = c;
+      sigState[key].ctx = ctx;
+
+      const getPos = (e) => {
+        const rect = c.getBoundingClientRect();
+        return {
+          x: (e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0)) - rect.left,
+          y: (e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0)) - rect.top
+        };
+      };
+
+      const start = (e) => {
+        sigState[key].drawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+      };
+
+      const move = (e) => {
+        if (!sigState[key].drawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+      };
+
+      const stop = () => { sigState[key].drawing = false; };
+
+      c.addEventListener('mousedown', start);
+      c.addEventListener('mousemove', move);
+      c.addEventListener('mouseup', stop);
+      c.addEventListener('mouseleave', stop);
+
+      c.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); });
+      c.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); });
+      c.addEventListener('touchend', stop);
+    }
+
+    function resizeCanvases() {
+      ['tech', 'spv'].forEach(key => {
+        const c = sigState[key].canvas;
+        if(c) {
+          const rect = c.getBoundingClientRect();
+          c.width = rect.width || 300;
+          c.height = rect.height || 112;
+          clearCanvas(key === 'tech' ? 'techCanvas' : 'spvCanvas');
+        }
+      });
+    }
+
+    function clearCanvas(canvasId) {
+      const key = canvasId === 'techCanvas' ? 'tech' : 'spv';
+      const c = sigState[key].canvas;
+      const ctx = sigState[key].ctx;
+      if (c && ctx) {
+        ctx.clearRect(0, 0, c.width, c.height);
+      }
+    }
+
+    function getCanvasData(key) {
+      const c = sigState[key].canvas;
+      if (!c) return null;
+      const blank = document.createElement('canvas');
+      blank.width = c.width;
+      blank.height = c.height;
+      if (c.toDataURL() === blank.toDataURL()) return null;
+      return c.toDataURL();
+    }
+
+    // --- EXECUTE PM & CHECKLIST ---
+    let currentPMBeforePhoto = null;
+    let currentPMAfterPhoto = null;
+
+    function openModalPM(itemId) {
+      const item = appItems.find(i => i.id === itemId);
+      if(!item) return;
+
+      document.getElementById('pmTargetItemId').value = item.id;
+      document.getElementById('pmModalMachineName').innerText = item.name;
+      document.getElementById('pmModalCategory').innerText = item.category;
+      document.getElementById('pmModalLocation').innerText = item.location;
+      document.getElementById('pmModalSN').innerText = item.sn || '-';
+
+      const container = document.getElementById('checklistContainer');
+      container.innerHTML = '';
+      
+      let checklistItems = CHECKLISTS[item.category] || CHECKLISTS['Lainnya'];
+      if(item.standard) {
+        checklistItems = [item.standard, ...checklistItems];
+      }
+
+      checklistItems.forEach((task) => {
+        container.innerHTML += `
+          <label class="flex items-start gap-3 p-2.5 bg-slate-900 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+            <input type="checkbox" checked class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-950 border-slate-700 w-4 h-4">
+            <span class="text-xs text-slate-300 font-medium leading-relaxed">${task}</span>
+          </label>
+        `;
+      });
+
+      currentPMBeforePhoto = null;
+      currentPMAfterPhoto = null;
+      document.getElementById('previewBefore').innerHTML = `<i class="fa-solid fa-camera text-2xl text-slate-600 mb-2"></i><span class="text-[11px] text-slate-400">Klik / Upload Foto Sebelum</span>`;
+      document.getElementById('previewAfter').innerHTML = `<i class="fa-solid fa-camera text-2xl text-slate-600 mb-2"></i><span class="text-[11px] text-slate-400">Klik / Upload Foto Sesudah</span>`;
+      document.getElementById('pmNotes').value = '';
+      document.getElementById('pmTechnicianName').value = '-';
+      document.getElementById('pmSpvName').value = '-';
+      document.getElementById('pmResultStatus').value = 'Selesai & Lolos (Pass)';
+
+      document.getElementById('modalMaintenance').classList.remove('hidden');
+      setTimeout(resizeCanvases, 100);
+    }
+
+    function closeModalPM() {
+      document.getElementById('modalMaintenance').classList.add('hidden');
+    }
+
+    function previewImage(input, previewId) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imgData = e.target.result;
+          document.getElementById(previewId).innerHTML = `<img src="${imgData}" class="h-24 w-full object-cover rounded-lg border border-slate-700">`;
+          if (previewId === 'previewBefore') currentPMBeforePhoto = imgData;
+          if (previewId === 'previewAfter') currentPMAfterPhoto = imgData;
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handleSavePMExecution(e) {
+      e.preventDefault();
+      const itemId = document.getElementById('pmTargetItemId').value;
+      const itemIndex = appItems.findIndex(i => i.id === itemId);
+      if(itemIndex === -1) return;
+
+      const technicianName = document.getElementById('pmTechnicianName').value;
+      const spvName = document.getElementById('pmSpvName').value;
+
+      if (!technicianName || !spvName) {
+        alert('Mohon lengkapi Nama Teknisi dan Nama SPV / Manager.');
+        return;
+      }
+
+      const techSig = getCanvasData('tech');
+      const spvSig = getCanvasData('spv');
+
+      const item = appItems[itemIndex];
+      const todayStr = getRelativeDate(0);
+      const nextPMStr = calculateNextPM(todayStr);
+
+      const checkedElements = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      let completedCount = 0;
+      checkedElements.forEach(cb => { if(cb.checked) completedCount++; });
+
+      const logEntry = {
+        id: 'log-' + Date.now(),
+        itemId: item.id,
+        itemName: item.name,
+        category: item.category,
+        location: item.location,
+        executionDate: todayStr,
+        status: document.getElementById('pmResultStatus').value,
+        notes: document.getElementById('pmNotes').value || 'Pemeliharaan rutin mingguan berjalan aman & lancar.',
+        technician: technicianName,
+        spv: spvName,
+        techSig: techSig,
+        spvSig: spvSig,
+        tasksCompleted: `${completedCount}/${checkedElements.length} Tugas Lolos Check`,
+        photoBefore: currentPMBeforePhoto,
+        photoAfter: currentPMAfterPhoto
+      };
+
+      appItems[itemIndex].lastPM = todayStr;
+      appItems[itemIndex].nextPM = nextPMStr;
+
+      appHistory.unshift(logEntry);
+
+      saveData();
+      closeModalPM();
+      alert(`PM untuk ${item.name} berhasil disimpan & disetujui! JADWAL JATUH TEMPO NEXT: ${nextPMStr}`);
+    }
+
+    // --- HISTORY & REPORT PRINTING ---
+    function renderHistoryTable() {
+      const tbody = document.getElementById('historyTableBody');
+      document.getElementById('historyTotalBadge').innerText = `${appHistory.length} Total Log`;
+      tbody.innerHTML = '';
+
+      if(appHistory.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">Belum ada riwayat pelaksanaan maintenance.</td></tr>`;
+        return;
+      }
+
+      appHistory.forEach(log => {
+        const isPass = log.status.includes('Lolos') || log.status.includes('Pass');
+        const badgeClass = isPass ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-400 border border-rose-500/30';
+
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-900/50 transition">
+            <td class="p-4 font-semibold text-white">${log.executionDate}</td>
+            <td class="p-4">
+              <div class="font-bold text-slate-200">${log.itemName}</div>
+              <div class="text-[11px] text-slate-500">${log.category} &bull; ${log.location}</div>
+            </td>
+            <td class="p-4 text-slate-300 font-medium">
+              <div>Teknisi: <strong class="text-slate-100">${log.technician}</strong></div>
+              <div class="text-[11px] text-slate-400">SPV: ${log.spv || '-'}</div>
+            </td>
+            <td class="p-4"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${badgeClass}">${log.status}</span></td>
+            <td class="p-4">
+              <div class="flex items-center gap-2">
+                ${log.photoBefore ? `<img src="${log.photoBefore}" title="Sebelum" class="w-8 h-8 rounded border border-slate-700 object-cover">` : '<span class="text-[10px] text-slate-600">No Photo</span>'}
+                ${log.photoAfter ? `<img src="${log.photoAfter}" title="Sesudah" class="w-8 h-8 rounded border border-slate-700 object-cover">` : ''}
+              </div>
+            </td>
+            <td class="p-4 text-center">
+              <button onclick="openModalReport('${log.id}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition">
+                Detail PDF
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function openModalReport(logId) {
+      const log = appHistory.find(h => h.id === logId);
+      if(!log) return;
+
+      const logoHtml = appSettings.customLogo 
+        ? `<img src="${appSettings.customLogo}" class="h-10 w-10 object-cover rounded-lg border border-slate-700">`
+        : `<div class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center text-white"><i class="fa-solid fa-building"></i></div>`;
+
+      const content = document.getElementById('printArea');
+      content.innerHTML = `
+        <div class="border-b border-slate-800 pb-4 mb-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            ${logoHtml}
+            <div>
+              <h2 class="text-lg font-bold text-white">${appSettings.compName}</h2>
+              <p class="text-xs text-slate-400">${appSettings.compAddress}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-[11px] font-bold bg-indigo-600/20 text-indigo-300 px-3 py-1 rounded-md inline-block border border-indigo-500/30">
+              LAPORAN WORK ORDER MAINTENANCE
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 text-xs text-slate-300 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
+          <div><span class="text-slate-500">Nama Mesin:</span> <strong>${log.itemName}</strong></div>
+          <div><span class="text-slate-500">Tanggal Maintenance:</span> <strong>${log.executionDate}</strong></div>
+          <div><span class="text-slate-500">Kategori Peralatan:</span> <strong>${log.category}</strong></div>
+          <div><span class="text-slate-500">Hasil Check:</span> <strong>${log.tasksCompleted}</strong></div>
+          <div><span class="text-slate-500">Lokasi:</span> <strong>${log.location}</strong></div>
+          <div><span class="text-slate-500">Status Inspeksi:</span> <strong>${log.status}</strong></div>
+        </div>
+
+        <div class="pt-2">
+          <span class="text-slate-400 font-semibold block mb-1">Catatan Kerusakan & Corrective Actions:</span>
+          <p class="bg-slate-900 p-3 rounded-xl text-xs text-slate-300 border border-slate-800">${log.notes}</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-2">
+          <div>
+            <span class="text-slate-400 font-semibold block mb-1">Foto Sebelum Maintenance</span>
+            <div class="border border-slate-800 rounded-xl h-36 bg-slate-900 flex items-center justify-center overflow-hidden">
+              ${log.photoBefore ? `<img src="${log.photoBefore}" class="w-full h-full object-cover">` : '<span class="text-slate-600">Foto tidak tersedia</span>'}
+            </div>
+          </div>
+          <div>
+            <span class="text-slate-400 font-semibold block mb-1">Foto Sesudah Maintenance</span>
+            <div class="border border-slate-800 rounded-xl h-36 bg-slate-900 flex items-center justify-center overflow-hidden">
+              ${log.photoAfter ? `<img src="${log.photoAfter}" class="w-full h-full object-cover">` : '<span class="text-slate-600">Foto tidak tersedia</span>'}
+            </div>
+          </div>
+        </div>
+
+        <!-- PRINT SECTION: DOUBLE SIGNATURE DISPLAY -->
+        <div class="pt-4 mt-4 border-t border-slate-800 grid grid-cols-2 gap-6">
+          <div class="text-center">
+            <span class="text-slate-400 text-[11px] block mb-1 font-semibold">1. Teknisi Pelaksana</span>
+            <div class="border border-slate-800 rounded-xl p-1 bg-slate-900 h-20 flex items-center justify-center">
+              ${log.techSig ? `<img src="${log.techSig}" class="max-h-full max-w-full">` : '<span class="text-slate-600 text-[10px]">Tanpa TTD</span>'}
+            </div>
+            <span class="text-slate-200 font-bold text-xs mt-1 block">(${log.technician || 'Teknisi'})</span>
+          </div>
+
+          <div class="text-center">
+            <span class="text-slate-400 text-[11px] block mb-1 font-semibold">2. SPV / Manager Penanggung Jawab</span>
+            <div class="border border-slate-800 rounded-xl p-1 bg-slate-900 h-20 flex items-center justify-center">
+              ${log.spvSig ? `<img src="${log.spvSig}" class="max-h-full max-w-full">` : '<span class="text-slate-600 text-[10px]">Tanpa TTD</span>'}
+            </div>
+            <span class="text-slate-200 font-bold text-xs mt-1 block">(${log.spv || 'SPV / Manager'})</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('modalReport').classList.remove('hidden');
+    }
+
+    function closeModalReport() {
+      document.getElementById('modalReport').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
